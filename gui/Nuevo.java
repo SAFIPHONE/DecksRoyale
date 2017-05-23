@@ -12,11 +12,9 @@ import javax.swing.border.EmptyBorder;
 import funcionalidad.Carta;
 import funcionalidad.Mazo;
 import funcionalidad.MazoCompletoException;
+import funcionalidad.MazoVacioException;
 
 import javax.swing.JComboBox;
-import java.awt.event.ItemListener;
-import java.util.concurrent.ForkJoinWorkerThread;
-import java.awt.event.ItemEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
@@ -28,9 +26,8 @@ public class Nuevo extends JDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JComboBox<Object> comboCartas;
-	private Mazo mazoNuevo;
-	private JComboBox comboMazo;
+	private JComboBox <Carta> comboCartas;
+	private JComboBox <Carta> comboMazo;
 
 	/**
 	 * Launch the application.
@@ -49,6 +46,7 @@ public class Nuevo extends JDialog {
 	 * Contructor de la clase
 	 */
 	public Nuevo() {
+		
 		setResizable(false);
 		setModal(true);
 		setTitle("Crear nuevo mazo");
@@ -58,7 +56,7 @@ public class Nuevo extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		comboCartas = new JComboBox<Object>();
+		comboCartas = new JComboBox<Carta>();
 		comboCartas.setBounds(79, 43, 221, 24);
 		contentPanel.add(comboCartas);
 		
@@ -79,50 +77,80 @@ public class Nuevo extends JDialog {
 		lblMazo.setBounds(26, 153, 66, 15);
 		contentPanel.add(lblMazo);
 		
-		comboMazo = new JComboBox();
+		comboMazo = new JComboBox<Carta>();
 		comboMazo.setBounds(79, 148, 221, 24);
 		contentPanel.add(comboMazo);
+		
+		JButton btnNewButton = new JButton("Eliminar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				eliminarCarta();
+			}
+		});
+		btnNewButton.setBounds(312, 148, 107, 25);
+		contentPanel.add(btnNewButton);
+		
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnVolver.setBounds(180, 228, 114, 25);
+		contentPanel.add(btnVolver);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 		}
-		todasCarta();
+		todasCarta();//carga todas las cartas del juego en comboBox
+		
 	}
 
 	/**
 	 * Añade la carta seleccionada del comboBox al mazo
 	 */
 	private void annadirCarta() {
-		comboCartas.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
+
 				Carta carta = (Carta)comboCartas.getSelectedItem();
 				try {
-					mazoNuevo.annadir(carta);
+					Mazo.annadir(carta);
 					JOptionPane.showMessageDialog(null, "Carta añadida correctamente");
 				} catch (MazoCompletoException e) {
-					JOptionPane.showMessageDialog(null, "La baraja ya dispone de 8 cartas");
+					JOptionPane.showMessageDialog(null, "La baraja ya dispone de 8 cartas","Añadir carta",JOptionPane.ERROR_MESSAGE);
 				}
 				
-			}
-		});
+	}
+	
+	private void eliminarCarta(){
+		Carta carta = (Carta)comboMazo.getSelectedItem();
+		try {
+			Mazo.remove(carta);
+		} catch (MazoVacioException e) {
+			JOptionPane.showMessageDialog(null, "Error al eliminar carta, el mazo esta vacío", "Eliminar carta", JOptionPane.ERROR_MESSAGE);
+		}
+		
 	}
 	
 	/**
 	 * Carga todas las cartas en el comboBox
+	 * @return 
 	 */
 	void todasCarta(){
 			for (Carta carta :Carta.values()) {
 				comboCartas.addItem(carta);
 			}
+			
 	}
 	
 	/**
 	 * Carga las cartas elegidas para crear el mazo en el comboBox
+	 * @return 
 	 */
 	void cartasMazo(){
-		for (Carta carta : mazoNuevo) {
-			comboMazo.addItem(item);
+		for (Carta carta : Mazo.mazo ) {
+			comboMazo.addItem(carta);
 		}
+		
 	}
 }

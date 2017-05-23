@@ -89,8 +89,14 @@ public class DecksRoyale extends JFrame {
 		JMenu mnAyuda = new JMenu("Ayuda");
 		menuBar.add(mnAyuda);
 		
-		JMenu mnAceraDe = new JMenu("Acerca de");
-		menuBar.add(mnAceraDe);
+		JMenuItem mntmAcercaDe = new JMenuItem("Acerca de");
+		mntmAcercaDe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AcercaDe acerca = new AcercaDe();
+				acerca.setVisible(true);
+			}
+		});
+		mnAyuda.add(mntmAcercaDe);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
