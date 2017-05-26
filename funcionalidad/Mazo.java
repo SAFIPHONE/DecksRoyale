@@ -1,10 +1,15 @@
 package funcionalidad;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Mazo {
+public class Mazo implements Serializable {
 
-	   public static  ArrayList <Carta> mazo = new ArrayList <Carta>();
+	   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static  ArrayList <Carta> mazo = new ArrayList <Carta>();
 	
 	public Mazo() {
 	}
@@ -16,7 +21,7 @@ public class Mazo {
 	}
 
 	public static void remove(Carta carta) throws MazoVacioException{
-		if(isEmpty()){
+		if(estaVacio()){
 			throw new MazoVacioException("El mazo se encuentra vacío");
 		}
 		mazo.remove(carta);
@@ -28,10 +33,11 @@ public class Mazo {
 		return mazo;
 	}
 	
-	static boolean isEmpty(){
+	static boolean estaVacio(){
 		if(mazo.isEmpty())
 			return true;
-		return false;
+		else
+			return false;
 	}
 	
 	public static int  size(){

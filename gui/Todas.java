@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import funcionalidad.Calidad;
 import funcionalidad.Carta;
 
 import javax.swing.JScrollPane;
@@ -16,12 +17,18 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Todas extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JComboBox <Carta> comboTodas;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JRadioButton rdbtnComunes;
+	private JRadioButton rdbtnEspeciales;
+	private JRadioButton rdbtnEpicas;
+	private JRadioButton rdbtnLegendarias;
 
 	/**
 	 * Launch the application.
@@ -47,51 +54,53 @@ public class Todas extends JDialog {
 		contentPanel.setLayout(null);
 		
 		comboTodas = new JComboBox  <Carta>();
-		comboTodas.setBounds(103, 82, 240, 24);
+		comboTodas.setBounds(97, 65, 240, 24);
 		contentPanel.add(comboTodas);
 		
 		JLabel lblCartasActualesDel = new JLabel("Cartas actuales del juego");
-		lblCartasActualesDel.setBounds(123, 40, 199, 30);
+		lblCartasActualesDel.setBounds(112, 23, 199, 30);
 		contentPanel.add(lblCartasActualesDel);
 		
-		JRadioButton rdbtnComunes = new JRadioButton("Comunes");
+		rdbtnComunes = new JRadioButton("Comunes");
 		buttonGroup.add(rdbtnComunes);
 		rdbtnComunes.setBounds(27, 176, 101, 23);
 		contentPanel.add(rdbtnComunes);
 		
-		JRadioButton rdbtnEspeciales = new JRadioButton("Especiales");
+		rdbtnEspeciales = new JRadioButton("Especiales");
 		buttonGroup.add(rdbtnEspeciales);
 		rdbtnEspeciales.setBounds(131, 176, 109, 23);
 		contentPanel.add(rdbtnEspeciales);
 		
-		JRadioButton rdbtnE = new JRadioButton("Epicas");
-		buttonGroup.add(rdbtnE);
-		rdbtnE.setBounds(239, 176, 83, 23);
-		contentPanel.add(rdbtnE);
+		rdbtnEpicas = new JRadioButton("Epicas");
+		buttonGroup.add(rdbtnEpicas);
+		rdbtnEpicas.setBounds(239, 176, 83, 23);
+		contentPanel.add(rdbtnEpicas);
 		
-		JRadioButton rdbtnLegendarias = new JRadioButton("Legendarias");
+		rdbtnLegendarias = new JRadioButton("Legendarias");
 		buttonGroup.add(rdbtnLegendarias);
 		rdbtnLegendarias.setBounds(321, 176, 119, 23);
 		contentPanel.add(rdbtnLegendarias);
 		
 		JLabel lblFiltrarPorCalidad = new JLabel("Filtrar por calidad :");
-		lblFiltrarPorCalidad.setBounds(163, 134, 130, 24);
+		lblFiltrarPorCalidad.setBounds(138, 124, 173, 24);
 		contentPanel.add(lblFiltrarPorCalidad);
+		
+		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.setBounds(123, 228, 114, 25);
+		contentPanel.add(btnAceptar);
+		
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnVolver.setBounds(249, 228, 114, 25);
+		contentPanel.add(btnVolver);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
 		}
 		
 		todasCarta();
@@ -105,8 +114,16 @@ public class Todas extends JDialog {
 			}
 	}
 	
-//	void obtenerCalidad(){
-//		if()
-//		
+//	Calidad obtenerCalidad(){
+//		if(rdbtnComunes.isSelected())
+//			return Calidad.COMUN;
+//		else if(rdbtnEspeciales.isSelected())
+//			return Calidad.ESPECIAL;
+//		else if(rdbtnEpicas.isSelected())
+//			return Calidad.EPICA;
+//		else if(rdbtnLegendarias.isSelected())
+//			return Calidad.LEGENDARIA;
+//		else
+//			
 //	}
 }
