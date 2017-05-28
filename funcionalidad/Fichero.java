@@ -12,9 +12,9 @@ import java.io.ObjectOutputStream;
 
 public class Fichero {
 	
-	public static Object leer(File fichero) throws FileNotFoundException, IOException, ClassNotFoundException{
+	public static Mazo leer(File fichero) throws FileNotFoundException, IOException, ClassNotFoundException{
 		try(ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(fichero)))){
-			return in.readObject();
+			return (Mazo) in.readObject();
 		}
 	}
 	

@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import funcionalidad.Carta;
+import funcionalidad.CartaYaExisteException;
 import funcionalidad.Gestionar;
 import funcionalidad.Mazo;
 import funcionalidad.MazoCompletoException;
@@ -34,6 +35,7 @@ public class Nuevo extends JDialog {
 	private JComboBox <Carta> comboCartas;
 	private JComboBox <Carta> comboMazo;
 	private JFileChooser jfilechooser;
+	private Mazo mazo = new Mazo();
 
 	/**
 	 * Launch the application.
@@ -127,23 +129,22 @@ public class Nuevo extends JDialog {
 	private void annadirCarta() {
 
 				Carta carta = (Carta)comboCartas.getSelectedItem();
-				try {
+				try { 
 					Mazo.annadir(carta);
 					comboMazo.addItem(carta);
 					JOptionPane.showMessageDialog(null, "Carta añadida correctamente","Añadir carta",JOptionPane.INFORMATION_MESSAGE);
-				} catch (MazoCompletoException e) {
+				} catch (MazoCompletoException | CartaYaExisteException e) {
 					JOptionPane.showMessageDialog(null, "La baraja ya dispone de 8 cartas","Añadir carta",JOptionPane.ERROR_MESSAGE);
 				}
 				
 	}
 	
 	private void eliminarCarta(){
-	
-		
 		try {
 
 			Carta carta = (Carta)comboMazo.getSelectedItem();
 			Mazo.remove(carta);
+			comboMazo.removeItem(carta);
 			JOptionPane.showMessageDialog(null, "Carta eliminada correctamente","Eliminar carta",JOptionPane.INFORMATION_MESSAGE);
 			
 		} catch (MazoVacioException e) {
@@ -163,9 +164,9 @@ public class Nuevo extends JDialog {
 	}
 	
 	void guardarMazo(){
-		if(jfilechooser.showSaveDialog(null) != JFileChooser.APPROVE_OPTION){
-			return;
-		}
+//		if(jfilechooser.showSaveDialog(null) != JFileChooser.APPROVE_OPTION){
+//			return;
+//		}
 			File archivo = jfilechooser.getSelectedFile();
 		
 			try {

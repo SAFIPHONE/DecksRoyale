@@ -23,12 +23,11 @@ import java.awt.event.ActionEvent;
 public class Todas extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JComboBox <Carta> comboTodas;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JRadioButton rdbtnComunes;
-	private JRadioButton rdbtnEspeciales;
-	private JRadioButton rdbtnEpicas;
-	private JRadioButton rdbtnLegendarias;
+	private JComboBox <Carta> comboBoxLegendarias;
+	private JComboBox <Carta> comboBoxEpicas;
+	private JComboBox <Carta> comboBoxEspeciales;
+	private JComboBox <Carta> comboBoxComunes;
 
 	/**
 	 * Launch the application.
@@ -47,46 +46,15 @@ public class Todas extends JDialog {
 	 * Create the dialog.
 	 */
 	public Todas() {
+		setTitle("Cartas del juego");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		comboTodas = new JComboBox  <Carta>();
-		comboTodas.setBounds(97, 65, 240, 24);
-		contentPanel.add(comboTodas);
-		
-		JLabel lblCartasActualesDel = new JLabel("Cartas actuales del juego");
-		lblCartasActualesDel.setBounds(112, 23, 199, 30);
-		contentPanel.add(lblCartasActualesDel);
-		
-		rdbtnComunes = new JRadioButton("Comunes");
-		buttonGroup.add(rdbtnComunes);
-		rdbtnComunes.setBounds(27, 176, 101, 23);
-		contentPanel.add(rdbtnComunes);
-		
-		rdbtnEspeciales = new JRadioButton("Especiales");
-		buttonGroup.add(rdbtnEspeciales);
-		rdbtnEspeciales.setBounds(131, 176, 109, 23);
-		contentPanel.add(rdbtnEspeciales);
-		
-		rdbtnEpicas = new JRadioButton("Epicas");
-		buttonGroup.add(rdbtnEpicas);
-		rdbtnEpicas.setBounds(239, 176, 83, 23);
-		contentPanel.add(rdbtnEpicas);
-		
-		rdbtnLegendarias = new JRadioButton("Legendarias");
-		buttonGroup.add(rdbtnLegendarias);
-		rdbtnLegendarias.setBounds(321, 176, 119, 23);
-		contentPanel.add(rdbtnLegendarias);
-		
-		JLabel lblFiltrarPorCalidad = new JLabel("Filtrar por calidad :");
-		lblFiltrarPorCalidad.setBounds(138, 124, 173, 24);
-		contentPanel.add(lblFiltrarPorCalidad);
-		
 		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.setBounds(123, 228, 114, 25);
+		btnAceptar.setBounds(98, 225, 114, 25);
 		contentPanel.add(btnAceptar);
 		
 		JButton btnVolver = new JButton("Volver");
@@ -95,35 +63,59 @@ public class Todas extends JDialog {
 				dispose();
 			}
 		});
-		btnVolver.setBounds(249, 228, 114, 25);
+		btnVolver.setBounds(245, 225, 114, 25);
 		contentPanel.add(btnVolver);
+		
+		comboBoxComunes = new JComboBox <Carta> ();
+		comboBoxComunes.setBounds(224, 29, 168, 26);
+		contentPanel.add(comboBoxComunes);
+		
+		JLabel lblComunes = new JLabel("Comunes");
+		lblComunes.setBounds(34, 34, 95, 17);
+		contentPanel.add(lblComunes);
+		
+		JLabel lblEspeciales = new JLabel("Especiales");
+		lblEspeciales.setBounds(34, 81, 106, 17);
+		contentPanel.add(lblEspeciales);
+		
+		comboBoxEspeciales = new JComboBox <Carta>();
+		comboBoxEspeciales.setBounds(224, 72, 168, 26);
+		contentPanel.add(comboBoxEspeciales);
+		
+		JLabel lblEpicas = new JLabel("Epicas");
+		lblEpicas.setBounds(34, 126, 95, 17);
+		contentPanel.add(lblEpicas);
+		
+		comboBoxEpicas = new JComboBox <Carta> ();
+		comboBoxEpicas.setBounds(224, 121, 168, 26);
+		contentPanel.add(comboBoxEpicas);
+		
+		JLabel lblLegendarias = new JLabel("Legendarias");
+		lblLegendarias.setBounds(34, 171, 95, 17);
+		contentPanel.add(lblLegendarias);
+		
+		comboBoxLegendarias = new JComboBox <Carta> ();
+		comboBoxLegendarias.setBounds(224, 171, 168, 26);
+		contentPanel.add(comboBoxLegendarias);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 		}
-		
-		todasCarta();
+		obtenerCalidad();
 	}
-	/**
-	 * Carga todas las cartas en el comboBox
-	 */
-	void todasCarta(){
-			for (Carta carta :Carta.values()) {
-				comboTodas.addItem(carta);
-			}
-	}
+
+	void obtenerCalidad(){
 	
-//	Calidad obtenerCalidad(){
-//		if(rdbtnComunes.isSelected())
-//			return Calidad.COMUN;
-//		else if(rdbtnEspeciales.isSelected())
-//			return Calidad.ESPECIAL;
-//		else if(rdbtnEpicas.isSelected())
-//			return Calidad.EPICA;
-//		else if(rdbtnLegendarias.isSelected())
-//			return Calidad.LEGENDARIA;
-//		else
-//			
-//	}
+		for (Carta carta: Carta.values()) {
+			if(carta.getCalidad()==Calidad.COMUN)
+				comboBoxComunes.addItem(carta);
+			else if (carta.getCalidad()==Calidad.ESPECIAL)
+				comboBoxEspeciales.addItem(carta);
+			else if (carta.getCalidad()==Calidad.EPICA)
+				comboBoxEpicas.addItem(carta);
+			else
+				comboBoxLegendarias.addItem(carta);
+		}
+	}
 }

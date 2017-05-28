@@ -9,8 +9,18 @@ public class Gestionar {
 
 	static File fichero = new File("SinNombre.obj");
 	
+	
+	public static File getFichero() {
+		return fichero;
+	}
+
+	private static void setFichero(File fichero) {
+		Gestionar.fichero = fichero;
+	}
+
 	public static void guardar(File file) throws FileNotFoundException, IOException{
 			Fichero.escribir(file);
+			setFichero(file);
 	
 	}
 	
@@ -18,8 +28,8 @@ public class Gestionar {
 		Fichero.escribir(fichero);
 	}
 	
-	public static void abrir(File file) throws FileNotFoundException, ClassNotFoundException, IOException{
-			Fichero.leer(file);
+	public static Mazo abrir(File file) throws FileNotFoundException, ClassNotFoundException, IOException{
+			return Fichero.leer(file);
 	}
 	
 }
