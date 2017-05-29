@@ -23,6 +23,7 @@ public enum Carta {
 	HORDA_ESBIRROS(Calidad.COMUN),
 	BARBAROS_ELITE(Calidad.COMUN),
 	GIGANTE_NOBLE(Calidad.COMUN),
+	ESBIRROS(Calidad.COMUN),
 	
 	
 	//CARTAS ESPECIALES
@@ -47,6 +48,8 @@ public enum Carta {
 	RECOLECTOR_ELIXIR(Calidad.ESPECIAL),
 	CHOZA_BARBAROS(Calidad.ESPECIAL),
 	TRIO_MOSQUETERAS(Calidad.ESPECIAL),
+	TORRE_INFERNO(Calidad.ESPECIAL),
+	
 	
 	
 	//CARTAS EPICAS
@@ -71,6 +74,8 @@ public enum Carta {
 	GIGANTE_ESQUELETO(Calidad.EPICA),
 	PEKKA(Calidad.EPICA),
 	GOLEM(Calidad.EPICA),
+	RAYO(Calidad.EPICA),
+	
 	
 	
 	
@@ -85,7 +90,9 @@ public enum Carta {
 	LEÑADOR(Calidad.LEGENDARIA),
 	CEMENTERIO(Calidad.LEGENDARIA),
 	CHISPITAS(Calidad.LEGENDARIA),
-	SABUESO_LAVA(Calidad.LEGENDARIA);
+	SABUESO_LAVA(Calidad.LEGENDARIA),
+	MAGO_ELECTRICO(Calidad.LEGENDARIA),
+	BRUJA_NOCTURNA(Calidad.LEGENDARIA);
 	
 
 

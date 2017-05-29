@@ -67,15 +67,15 @@ public class Todas extends JDialog {
 		contentPanel.add(btnVolver);
 		
 		comboBoxComunes = new JComboBox <Carta> ();
-		comboBoxComunes.setBounds(224, 29, 168, 26);
+		comboBoxComunes.setBounds(224, 33, 168, 26);
 		contentPanel.add(comboBoxComunes);
 		
 		JLabel lblComunes = new JLabel("Comunes");
-		lblComunes.setBounds(34, 34, 95, 17);
+		lblComunes.setBounds(34, 38, 95, 17);
 		contentPanel.add(lblComunes);
 		
 		JLabel lblEspeciales = new JLabel("Especiales");
-		lblEspeciales.setBounds(34, 81, 106, 17);
+		lblEspeciales.setBounds(34, 77, 106, 17);
 		contentPanel.add(lblEspeciales);
 		
 		comboBoxEspeciales = new JComboBox <Carta>();
@@ -83,20 +83,24 @@ public class Todas extends JDialog {
 		contentPanel.add(comboBoxEspeciales);
 		
 		JLabel lblEpicas = new JLabel("Epicas");
-		lblEpicas.setBounds(34, 126, 95, 17);
+		lblEpicas.setBounds(34, 115, 95, 17);
 		contentPanel.add(lblEpicas);
 		
 		comboBoxEpicas = new JComboBox <Carta> ();
-		comboBoxEpicas.setBounds(224, 121, 168, 26);
+		comboBoxEpicas.setBounds(224, 110, 168, 26);
 		contentPanel.add(comboBoxEpicas);
 		
 		JLabel lblLegendarias = new JLabel("Legendarias");
-		lblLegendarias.setBounds(34, 171, 95, 17);
+		lblLegendarias.setBounds(34, 153, 95, 17);
 		contentPanel.add(lblLegendarias);
 		
 		comboBoxLegendarias = new JComboBox <Carta> ();
-		comboBoxLegendarias.setBounds(224, 171, 168, 26);
+		comboBoxLegendarias.setBounds(224, 148, 168, 26);
 		contentPanel.add(comboBoxLegendarias);
+		
+		JLabel lblTotalDeCartas = new JLabel("Total de cartas del juego: " + contarCartasJuego());
+		lblTotalDeCartas.setBounds(129, 196, 192, 17);
+		contentPanel.add(lblTotalDeCartas);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -117,5 +121,14 @@ public class Todas extends JDialog {
 			else
 				comboBoxLegendarias.addItem(carta);
 		}
+	}
+	
+	int contarCartasJuego(){
+		int contador = 0;
+		for (Carta carta: Carta.values()) {
+			contador++;
+		}
+		return contador;
+		
 	}
 }
