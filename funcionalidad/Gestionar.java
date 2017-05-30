@@ -1,11 +1,12 @@
 package funcionalidad;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 
 
-public class Gestionar {
+
+public class Gestionar implements Serializable{
 
 	static File fichero = new File("SinNombre.obj");
 	
@@ -18,18 +19,18 @@ public class Gestionar {
 		Gestionar.fichero = fichero;
 	}
 
-	public static void guardar(File file) throws FileNotFoundException, IOException{
-			Fichero.escribir(file);
-			setFichero(file);
+	public static void guardar(File fichero, Mazo mazo) throws ErrorEscrituraException{
+			Fichero.escribir(fichero, mazo);
+			setFichero(fichero);
 	
 	}
 	
-	public static void guardar() throws FileNotFoundException, IOException {
-		Fichero.escribir(fichero);
+	public static void guardar(Mazo mazo) throws ErrorEscrituraException {
+		Fichero.escribir(fichero,mazo);
 	}
 	
-	public static Mazo abrir(File file) throws FileNotFoundException, ClassNotFoundException, IOException{
-			return Fichero.leer(file);
+	public static Mazo abrir(File fichero) throws ErrorLecturaException, ClassNotFoundException, IOException{
+			return (Mazo)Fichero.leer(fichero);
 	}
 	
 }

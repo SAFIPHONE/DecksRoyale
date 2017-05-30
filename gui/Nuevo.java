@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 
 import funcionalidad.Carta;
 import funcionalidad.CartaYaExisteException;
+import funcionalidad.ErrorEscrituraException;
 import funcionalidad.Gestionar;
 import funcionalidad.Mazo;
 import funcionalidad.MazoCompletoException;
@@ -24,6 +25,8 @@ import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
+import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class Nuevo extends JDialog {
 
@@ -34,9 +37,10 @@ public class Nuevo extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JComboBox <Carta> comboCartas;
 	private JComboBox <Carta> comboMazo;
-	private JFileChooser jfilechooser;
+	private JFileChooser jfilechooser = new JFileChooser();
 	private Mazo mazo = new Mazo();
-
+	private JLabel lblCartas;
+	private int contador;
 	/**
 	 * Launch the application.
 	 */
@@ -58,14 +62,14 @@ public class Nuevo extends JDialog {
 		setResizable(false);
 		setModal(true);
 		setTitle("Crear nuevo mazo");
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 479, 332);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
 		comboCartas = new JComboBox<Carta>();
-		comboCartas.setBounds(79, 43, 221, 24);
+		comboCartas.setBounds(143, 84, 185, 24);
 		contentPanel.add(comboCartas);
 		
 		JButton btnAadir = new JButton("Añadir");
@@ -74,19 +78,21 @@ public class Nuevo extends JDialog {
 				annadirCarta();
 			}
 		});
-		btnAadir.setBounds(312, 43, 107, 25);
+		btnAadir.setBounds(340, 84, 107, 25);
 		contentPanel.add(btnAadir);
 		
-		JLabel lblCarta = new JLabel("Cartas :");
-		lblCarta.setBounds(165, 12, 59, 19);
+		JLabel lblCarta = new JLabel("<html><b>Carta :</b></html>");
+		lblCarta.setForeground(Color.WHITE);
+		lblCarta.setBounds(204, 53, 59, 19);
 		contentPanel.add(lblCarta);
 		
-		JLabel lblMazo = new JLabel("Mazo : ");
-		lblMazo.setBounds(165, 121, 66, 15);
+		JLabel lblMazo = new JLabel("<html><b>Mazo :</b></html> ");
+		lblMazo.setForeground(Color.WHITE);
+		lblMazo.setBounds(204, 120, 66, 15);
 		contentPanel.add(lblMazo);
 		
 		comboMazo = new JComboBox<Carta>();
-		comboMazo.setBounds(79, 148, 221, 24);
+		comboMazo.setBounds(143, 146, 185, 24);
 		contentPanel.add(comboMazo);
 		
 		JButton btnNewButton = new JButton("Eliminar");
@@ -95,7 +101,7 @@ public class Nuevo extends JDialog {
 					eliminarCarta();
 			}
 		});
-		btnNewButton.setBounds(312, 148, 107, 25);
+		btnNewButton.setBounds(340, 146, 107, 25);
 		contentPanel.add(btnNewButton);
 		
 		JButton btnVolver = new JButton("Volver");
@@ -104,22 +110,27 @@ public class Nuevo extends JDialog {
 				dispose();
 			}
 		});
-		btnVolver.setBounds(272, 215, 114, 25);
+		btnVolver.setBounds(244, 229, 114, 25);
 		contentPanel.add(btnVolver);
 		
 		JButton btnNewButton_1 = new JButton("Guardar");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+
 				guardarMazo();
 			}
 		});
-		btnNewButton_1.setBounds(79, 215, 114, 25);
+		btnNewButton_1.setBounds(118, 229, 114, 25);
 		contentPanel.add(btnNewButton_1);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-		}
+		lblCartas = new JLabel();
+		lblCartas.setForeground(Color.WHITE);
+		lblCartas.setBounds(12, 131, 114, 74);
+		contentPanel.add(lblCartas);
+		
+		JLabel fondo = new JLabel("");
+		fondo.setIcon(new ImageIcon(Nuevo.class.getResource("/imagenes/royale.png")));
+		fondo.setBounds(0, 0, 479, 304);
+		contentPanel.add(fondo);
 		todasCarta();//carga todas las cartas del juego en comboBox
 	}
 
@@ -130,11 +141,12 @@ public class Nuevo extends JDialog {
 
 				Carta carta = (Carta)comboCartas.getSelectedItem();
 				try { 
-					Mazo.annadir(carta);
+					mazo.annadir(carta);
 					comboMazo.addItem(carta);
+					lblCartas.setText("<html><b>Tu mazo <br></br> contiene " + comprobarCartasMazo() + " <br></br> carta.</b><html>");
 					JOptionPane.showMessageDialog(null, "Carta añadida correctamente","Añadir carta",JOptionPane.INFORMATION_MESSAGE);
 				} catch (MazoCompletoException | CartaYaExisteException e) {
-					JOptionPane.showMessageDialog(null, "La baraja ya dispone de 8 cartas","Añadir carta",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,e.getMessage(),"Añadir carta",JOptionPane.ERROR_MESSAGE);
 				}
 				
 	}
@@ -143,7 +155,7 @@ public class Nuevo extends JDialog {
 		try {
 
 			Carta carta = (Carta)comboMazo.getSelectedItem();
-			Mazo.remove(carta);
+			mazo.remove(carta);
 			comboMazo.removeItem(carta);
 			JOptionPane.showMessageDialog(null, "Carta eliminada correctamente","Eliminar carta",JOptionPane.INFORMATION_MESSAGE);
 			
@@ -164,16 +176,34 @@ public class Nuevo extends JDialog {
 	}
 	
 	void guardarMazo(){
-//		if(jfilechooser.showSaveDialog(null) != JFileChooser.APPROVE_OPTION){
-//			return;
-//		}
-			File archivo = jfilechooser.getSelectedFile();
+		if(comprobarCartasMazo() < 8){
+			try {
+				throw new MazoNoCompletoException("El mazo no contiene las 8 cartas necearias");
+			} catch (MazoNoCompletoException e) {
+				JOptionPane.showMessageDialog(null, e.getMessage(),"Mazo no completo",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		}
+		
+		if(jfilechooser.showSaveDialog(null) != JFileChooser.APPROVE_OPTION){
+			return;
+		}
+
 		
 			try {
-				Gestionar.guardar(archivo);
-			} catch (IOException e) {
+				File archivo = jfilechooser.getSelectedFile();
+				Gestionar.guardar(archivo, mazo);
+			} catch (ErrorEscrituraException  e) {
 				JOptionPane.showMessageDialog(null, "Error al guardar el archivo");
 			}
+		
+	}
+	int comprobarCartasMazo(){
+		if(comboMazo.getItemCount() >= 1){
+			contador=comboMazo.getItemCount();
+			return contador;
+		}
+		return contador;
 		
 	}
 }

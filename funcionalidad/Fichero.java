@@ -9,21 +9,35 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class Fichero {
+import javax.swing.JOptionPane;
+
+public class Fichero implements Serializable {
 	
-	public static Mazo leer(File fichero) throws FileNotFoundException, IOException, ClassNotFoundException{
-		try(ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(fichero)))){
-			return (Mazo) in.readObject();
-		}
-	}
-	
-	public static void escribir(File fichero) throws FileNotFoundException, IOException{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public static void escribir(File fichero, Mazo mazo) throws ErrorEscrituraException{
 		try(ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(fichero)))){
-			out.writeObject(fichero);
+			out.writeObject(mazo);
+		} catch (IOException e) {
+			throw new ErrorEscrituraException("Error de escritura");
 		}
 	
 	}
+	
+	public static Mazo leer(File fichero) throws ErrorLecturaException {
+		try(ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(fichero)))){
+				return (Mazo)in.readObject();
+			} catch (IOException | ClassNotFoundException e ) {
+					throw new ErrorLecturaException("Error de escritura");
+			} 
+		
+	}
+	
 
 
 

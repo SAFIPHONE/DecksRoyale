@@ -1,6 +1,8 @@
 package funcionalidad;
 
-public enum Calidad {
+import java.io.Serializable;
+
+public enum Calidad implements Serializable {
 
 	COMUN,ESPECIAL,EPICA,LEGENDARIA
 	

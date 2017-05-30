@@ -12,7 +12,6 @@ import javax.swing.border.EmptyBorder;
 import funcionalidad.Carta;
 import funcionalidad.Gestionar;
 import funcionalidad.Mazo;
-import imagenes.PanelImagen;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -26,6 +25,8 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 
 public class DecksRoyale extends JFrame {
 
@@ -34,7 +35,7 @@ public class DecksRoyale extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-//	private JFileChooser jfilechooser;
+//	private JFileChooser jfilechooser = new JFileChooser();
 
 	/**
 	 * Launch the application.
@@ -56,9 +57,10 @@ public class DecksRoyale extends JFrame {
 	 * Create the frame.
 	 */
 	public DecksRoyale() {
+		setResizable(false);
 		setTitle("Decks Clash Royale");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 700, 500);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -91,7 +93,7 @@ public class DecksRoyale extends JFrame {
 		mntmGuardar.setMnemonic('G');
 		mntmGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				guardar();
+//				guardar();
 			}
 		});
 		mnNuevo.add(mntmGuardar);
@@ -191,28 +193,25 @@ public class DecksRoyale extends JFrame {
 				
 			}
 		});
-		btnNuevoMazo.setBounds(63, 94, 123, 27);
+		btnNuevoMazo.setBounds(157, 199, 146, 52);
 		contentPane.add(btnNuevoMazo);
 		
 		JButton btnCargarMazo = new JButton("Cargar Mazo");
-		btnCargarMazo.setBounds(247, 94, 128, 27);
+		btnCargarMazo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CargarMazo cargaMazo = new CargarMazo();
+				cargaMazo.setVisible(true);
+			}
+		});
+		btnCargarMazo.setBounds(362, 199, 146, 52);
 		contentPane.add(btnCargarMazo);
 		
+		JLabel fondo = new JLabel("");
+		fondo.setIcon(new ImageIcon(DecksRoyale.class.getResource("/imagenes/nuevo.jpg")));
+		fondo.setBounds(0, 0, 700, 449);
+		contentPane.add(fondo);
+		
 
-	}
-	
-	void guardar(){
-//		if(jfilechooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION){
-//			File file = jfilechooser.getSelectedFile();
-//			if(!file.exists()){
-				try {
-					Gestionar.guardar();
-					JOptionPane.showMessageDialog(null, "Los cambios se guardaron con exito");
-				} catch (IOException e) {
-					JOptionPane.showMessageDialog(null, "Error al guardar el archivo");
-				}
-//			}
-//		}
 	}
 }
 

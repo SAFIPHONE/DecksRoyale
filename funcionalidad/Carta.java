@@ -1,6 +1,8 @@
 package funcionalidad;
 
-public enum Carta {
+import java.io.Serializable;
+
+public enum Carta implements Serializable {
 
 
 	//CARTAS COMUNES
